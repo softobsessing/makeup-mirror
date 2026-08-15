@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================= *
+ *  Glow-Up Mirror — cute "beauty game" theme                    *
+ * ============================================================= */
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  /* Soft candy gradient shows behind any camera letterboxing. */
+  background: linear-gradient(160deg, #ffe3f2 0%, #ffd0ea 40%, #ecd6ff 100%);
+  color: #6b2a4e;
+  font-family: "Quicksand", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+/* ----------------------------- Keyframes ---------------------------- */
+
+/* Brief white flash when a face scan completes. */
+@keyframes scanFlash {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Sweeping scan line for the (faux) nose / eye feature detection. */
+@keyframes scanSweep {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(120, 255, 190, 0.95),
+    transparent
+  );
+  box-shadow: 0 0 18px 4px rgba(80, 230, 160, 0.7);
+  animation: scanSweep 1.3s ease-in-out;
+}
+
+/* Soft pulsing ring used by the calibration scanner UI. */
+@keyframes scanPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.9;
+  }
+}
+
+/* Gentle drifting float for decorative hearts / sparkles. */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(6deg);
+  }
+}
+
+/* Slow bob for the active step chip. */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Twinkle for stars / sparkles. */
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Playful wiggle for icons. */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+/* Pop-in when the panel / important elements appear. */
+@keyframes popIn {
+  0% {
+    transform: scale(0.9) translateY(10px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Moving sheen across candy buttons. */
+@keyframes sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  60%,
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+/* ----------------------------- Utilities ---------------------------- */
+
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+.animate-bob {
+  animation: bob 2.2s ease-in-out infinite;
+}
+.animate-twinkle {
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+.animate-wiggle {
+  animation: wiggle 2.6s ease-in-out infinite;
+}
+.animate-pop {
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Candy gradient headline text. */
+.text-candy-gradient {
+  background: linear-gradient(100deg, #ff8fd0 0%, #ff5ba6 50%, #c85cff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Frosted pink-glass panel (replaces the old black blocks). */
+.panel-candy {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 247, 251, 0.9) 0%,
+    rgba(255, 231, 245, 0.84) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 22px 55px -22px rgba(200, 30, 115, 0.55),
+    inset 0 2px 0 rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  backdrop-filter: blur(16px) saturate(1.25);
+}
+
+/* Smaller frosted chip/pill. */
+.glass-candy {
+  background: rgba(255, 247, 251, 0.72);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 10px 24px -14px rgba(200, 30, 115, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+}
+
+/* Glossy candy button (primary). */
+.btn-candy {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ff9ad3 0%, #ff5ba6 55%, #ef3f95 100%);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 12px 24px -8px rgba(239, 63, 149, 0.65),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -4px 8px rgba(170, 20, 90, 0.28);
+  text-shadow: 0 1px 2px rgba(170, 20, 90, 0.35);
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+.btn-candy::after {
+  /* animated diagonal sheen */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: translateX(-120%);
+  animation: sheen 3.2s ease-in-out infinite;
+}
+.btn-candy:active {
+  transform: translateY(2px) scale(0.98);
+}
+.btn-candy:disabled {
+  filter: grayscale(0.35) opacity(0.5);
+  box-shadow: none;
+}
+.btn-candy:disabled::after {
+  display: none;
+}
+
+/* Soft secondary button. */
+.btn-soft {
+  background: rgba(255, 255, 255, 0.7);
+  color: #c21e73;
+  border: 2px solid rgba(255, 140, 200, 0.55);
+  box-shadow:
+    0 8px 18px -10px rgba(200, 30, 115, 0.45),
+    inset 0 2px 0 rgba(255, 255, 255, 0.85);
+  transition: transform 0.12s ease;
+}
+.btn-soft:active {
+  transform: translateY(2px) scale(0.98);
+}
+.btn-soft:disabled {
+  opacity: 0.4;
+}
